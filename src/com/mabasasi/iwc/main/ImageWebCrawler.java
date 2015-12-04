@@ -15,6 +15,7 @@ public class ImageWebCrawler {
     /**バージョン*/
     public static String APPLET_VERSION = "3.0";
     
+    
 
     private final MainView applet;      //アプレット作成クラス
     private final DataManager manager;    //データ管理クラス
