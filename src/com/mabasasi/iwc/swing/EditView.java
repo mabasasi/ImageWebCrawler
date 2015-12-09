@@ -219,8 +219,11 @@ public class EditView implements ActionListener{
             nsc.setReplaceWay((String) replaceWay.getSelectedItem());
 
             DefaultListModel model = (DefaultListModel) regex.getModel();
-            nsc.setProcessUrlRegex(Arrays.toString(model.toArray()));
-
+            nsc.clearProcessUrlRegex();
+            for (int i=0; i<model.size(); i++){
+                nsc.setProcessUrlRegex((String) model.get(i));
+            }
+            
             nsc.setAnalysisHold(Integer.valueOf(analysis.getText()));
             nsc.setDownloadNow(Integer.valueOf(download.getText()));
             
@@ -296,29 +299,29 @@ public class EditView implements ActionListener{
         String value = null;
         int option = -1;
         switch(e.getActionCommand()){
-//            case "New":
-//                    value = JOptionPane.showInputDialog(dialog, "新規："+tips, "");
-//                    if ((value != null)&&(!"".equals(value))){
-//                        model.addElement(value);
-//                    }
-//                break;
-//            case "Edit":
-//                if (regex.getSelectedIndex() != -1){
-//                    value = JOptionPane.showInputDialog(dialog, "編集："+tips, regex.getSelectedValue());
-//                    if ((value != null)&&(!"".equals(value))){
-//                        model.set(regex.getSelectedIndex(), value);
-//                    }
-//                }
-//                break;
-//            case "Delete":
-//                if (regex.getSelectedIndex() != -1){
-//                    option = JOptionPane.showConfirmDialog(dialog, "本当に削除しますか？\n"+regex.getSelectedValue(), "選択", JOptionPane.OK_CANCEL_OPTION);
-//                    if (option == JOptionPane.YES_OPTION){
-//                        model.remove(regex.getSelectedIndex());
-//                    }
-//                }
-//                break;
-//                
+            case "New":
+                    value = JOptionPane.showInputDialog(dialog, "新規："+tips, "");
+                    if ((value != null)&&(!"".equals(value))){
+                        model.addElement(value);
+                    }
+                break;
+            case "Edit":
+                if (regex.getSelectedIndex() != -1){
+                    value = JOptionPane.showInputDialog(dialog, "編集："+tips, regex.getSelectedValue());
+                    if ((value != null)&&(!"".equals(value))){
+                        model.set(regex.getSelectedIndex(), value);
+                    }
+                }
+                break;
+            case "Delete":
+                if (regex.getSelectedIndex() != -1){
+                    option = JOptionPane.showConfirmDialog(dialog, "本当に削除しますか？\n"+regex.getSelectedValue(), "選択", JOptionPane.OK_CANCEL_OPTION);
+                    if (option == JOptionPane.YES_OPTION){
+                        model.remove(regex.getSelectedIndex());
+                    }
+                }
+                break;
+                
             case "imageUpdate":
                 imageDownload();
                 break;
@@ -387,6 +390,7 @@ public class EditView implements ActionListener{
                 break;
             case "save":
                 try {
+                    createSiteData();
                     sc.saveSiteData();
                 } catch (Exception ex) {
                     Logger.getLogger(EditView.class.getName()).log(Level.SEVERE, null, ex);
